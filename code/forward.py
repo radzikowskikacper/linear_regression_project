@@ -10,5 +10,5 @@ def forward(trX, L, W, b, activate_pointer):
 
     return A, Z
 
-def calculate_cost():
-    pass
+def calculate_cost(out, trY):
+    return np.sum(np.power(out - trY, 2))

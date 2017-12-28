@@ -32,14 +32,14 @@ training_data = data[:, (data_indexes == 0)[0]]
 testing_data = data[:, (data_indexes == 1)[0]]
 validation_data = data[:, (data_indexes == 2)[0]]
 trX = training_data[0:2,:]
-trY = training_data[2,:]# or 3
+trY = np.reshape(training_data[2,:], (-1, 1))
 
 #training
 for i in range(0, number_of_iterations):
     #forward propagation through all the layers
     A, Z = forward(trX, L, W, b, relu)
 
-    calculate_cost()
+    cost = calculate_cost(A[L - 1], trY)
 
     #back propagation through all the layers
     dA = np.multiply(np.transpose(W[L - 1]), (A - Y)) # not sure - check if correct
