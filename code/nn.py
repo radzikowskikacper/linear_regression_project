@@ -48,8 +48,6 @@ for i in range(0, number_of_iterations):
     # dA = np.multiply(np.transpose(W[L - 1]), (A - Y)) # not sure - check if correct
     dA = A[L] - Y #initialization (cost derivative)
 
-    oldW = W
-    oldb = b
     W, b = backprop(L, m, learning_rate, A, dA, W, b, Z)
 
 # print(W)
