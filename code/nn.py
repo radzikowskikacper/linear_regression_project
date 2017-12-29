@@ -7,15 +7,17 @@ from function_to_estimate import generate_data
 from relu import relu, relu_backward
 import function_to_estimate
 
-layers = [2, 5, 4, 1] # number of units in each layer (layers[0] - input layer)
+layers = [2, 4, 5, 1] # number of units in each layer (layers[0] - input layer)
 L = len(layers) - 1  # number of layers - input layer doesn't count
 W = {}
 b = {}
 number_of_iterations = 2000
-learning_rate = 0.05
+learning_rate = 0.1
+
+num_of_train_examples = 100
 
 np.random.seed(100) # to have the same results (testing) - remove in final solution
-X = np.floor(np.random.rand(2, 1000) * 100) # inputs
+X = np.floor(np.random.rand(layers[0], num_of_train_examples) * 200 - 100) # inputs
 # rows - features, in our example one example is two-dimentional vector
 # columns - training example, above we have 1000 training examples
 Y = function_to_estimate.function1(X) # outputs
@@ -23,17 +25,17 @@ Y = function_to_estimate.function1(X) # outputs
 m = np.shape(X)[1] # number of training examples
 
 # parameters initialization
-for l in range(0,len(layers)):
+for l in range(1, len(layers)):
     W[l] = np.random.randn(layers[l], layers[l-1]) * 0.01 # or / np.sqrt(layers[l])
     b[l] = np.zeros((layers[l], 1))
 
-data = generate_data(0, 1000, 0.5, 0, 1000, 0.5)
-data_indexes = np.random.choice([0, 1, 2], p = [0.8, 0.1, 0.1], size = (1, data.shape[1]))
-training_data = data[:, (data_indexes == 0)[0]]
-testing_data = data[:, (data_indexes == 1)[0]]
-validation_data = data[:, (data_indexes == 2)[0]]
-trX = training_data[0:2,:]
-trY = np.reshape(training_data[2,:], (-1, 1))
+# data = generate_data(0, 1000, 0.5, 0, 1000, 0.5)
+# data_indexes = np.random.choice([0, 1, 2], p = [0.8, 0.1, 0.1], size = (1, data.shape[1]))
+# training_data = data[:, (data_indexes == 0)[0]]
+# testing_data = data[:, (data_indexes == 1)[0]]
+# validation_data = data[:, (data_indexes == 2)[0]]
+# trX = training_data[0:2,:]
+# trY = np.reshape(training_data[2,:], (-1, 1))
 
 #training
 for i in range(0, number_of_iterations):
