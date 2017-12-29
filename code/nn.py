@@ -11,7 +11,7 @@ layers = [2, 5, 4, 1] # number of units in each layer (layers[0] - input layer)
 L = len(layers) - 1  # number of layers - input layer doesn't count
 W = {}
 b = {}
-number_of_iterations = 200
+number_of_iterations = 2000
 learning_rate = 0.05
 
 np.random.seed(100) # to have the same results (testing) - remove in final solution
@@ -48,21 +48,9 @@ for i in range(0, number_of_iterations):
     # dA = np.multiply(np.transpose(W[L - 1]), (A - Y)) # not sure - check if correct
     dA = A[L] - Y #initialization (cost derivative)
 
-    #Lth (last) layer:
-    prevA = A[L - 1]
-    dZ = dA
-    prev_dA = np.transpose(W[L]) * dZ
-    dW = (1. / m) * np.dot(dZ, np.transpose(prevA))
-    db = 1. / m * np.sum(dZ, axis = 1, keepdims = True)
-    W[L], b[L] = update_parameters(learning_rate, dW, db, W[L], b[L])
-
-    #from (L-1)th to 1st layer:
-    for l in reversed(range(1, L)):
-        prevA = A[l - 1]
-        dW, db, prev_dA = backprop(Z[l], prev_dA, prevA, W[l], m)
-        W[l], b[l] = update_parameters(learning_rate, dW, db, W[l], b[l])
-
-
+    oldW = W
+    oldb = b
+    W, b = backprop(L, m, learning_rate, A, dA, W, b, Z)
 
 # print(W)
 # print(b)
