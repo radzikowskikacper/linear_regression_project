@@ -49,7 +49,7 @@ for i in range(0, number_of_iterations):
     tsA, tsZ = forward(tsX, L, W, b, sigmoid)
     tscost = calculate_cost(tsA[L], tsY)
 
-    print('Training cost: {} Testing cost: {}'.format(trcost, tscost))
+    print('Training cost: {:.2f} Testing cost: {:.2f}'.format(trcost, tscost))
 
     #back propagation through all the layers
     # dA = np.multiply(np.transpose(W[L - 1]), (A - Y)) # not sure - check if correct
