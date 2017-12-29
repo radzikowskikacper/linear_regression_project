@@ -2,9 +2,9 @@ import numpy as np
 
 from random import shuffle
 from forward import forward, calculate_cost
-from backward import backprop, update_parameters
+from backward import backprop
 from function_to_estimate import generate_data
-from relu import relu
+from relu import relu, relu_backward
 import function_to_estimate
 
 layers = [2, 5, 4, 1] # number of units in each layer (layers[0] - input layer)
@@ -48,7 +48,7 @@ for i in range(0, number_of_iterations):
     # dA = np.multiply(np.transpose(W[L - 1]), (A - Y)) # not sure - check if correct
     dA = A[L] - Y #initialization (cost derivative)
 
-    W, b = backprop(L, m, learning_rate, A, dA, W, b, Z)
+    W, b = backprop(L, m, learning_rate, A, dA, W, b, Z, relu_backward)
 
 # print(W)
 # print(b)

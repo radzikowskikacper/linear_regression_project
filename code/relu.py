@@ -3,7 +3,7 @@ import numpy as np
 def relu(Z):
     return np.maximum(0, Z)
 
-def backward(dA, Z):
+def relu_backward(dA, Z):
     return np.copy(dA) * derivative(Z)
 
 def derivative(Z):
