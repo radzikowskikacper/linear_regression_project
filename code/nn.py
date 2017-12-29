@@ -61,8 +61,6 @@ for i in range(1, number_of_iterations+1):
         print('Iteration: ', i, '   Training cost: {:.5f} Testing cost: {:.5f}'.format(trcost, tscost))
 
     #back propagation through all the layers
-    # dA = np.multiply(np.transpose(W[L - 1]), (A - Y)) # not sure - check if correct
-
     dA = trA[L] - trY #initialization (cost derivative)
     W, b = backprop(L, m, learning_rate, trA, dA, W, b, trZ, activation_fun['backward'])
 
