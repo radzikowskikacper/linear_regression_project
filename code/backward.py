@@ -1,7 +1,6 @@
 import numpy as np
 
 def backprop_on_layer(Z, dA, prevA, W, m, backward_activation_function):
-    # dZ = dA * relu.derivative(Z)
     dZ = backward_activation_function(dA, Z)
     prev_dA = np.dot(np.transpose(W), dZ)
     dW = 1. / m * np.dot(dZ, np.transpose(prevA))
@@ -16,10 +15,7 @@ def update_parameters(learning_rate, dW, db, W, b):
 def backprop(L, m, learning_rate, A, dA, W, b, Z, backward_activation_function):
     #Lth (last) layer:
     prevA = A[L - 1]
-    dZ = dA
-    prev_dA = np.transpose(W[L]) * dZ
-    dW = (1. / m) * np.dot(dZ, np.transpose(prevA))
-    db = 1. / m * np.sum(dZ, axis = 1, keepdims = True)
+    dW, db, prev_dA = backprop_on_layer(Z[L], dA, prevA, W[L], m, lambda dA, Z: dA)
     W[L], b[L] = update_parameters(learning_rate, dW, db, W[L], b[L])
 
     #from (L-1)th to 1st layer:

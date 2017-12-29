@@ -3,7 +3,7 @@ import numpy as np
 def sigmoid(Z):
     return 1/(1+np.exp(-Z))
 
-def backward(dA, Z):
+def sigmoid_backward(dA, Z):
     return dA * derivative(Z)
 
 def derivative(Z):

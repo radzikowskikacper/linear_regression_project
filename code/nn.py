@@ -4,19 +4,22 @@ from random import shuffle
 from forward import forward, calculate_cost
 from backward import backprop
 from function_to_estimate import generate_data
+from leaky_relu import leaky_relu, leaky_relu_backward
 from relu import relu, relu_backward
+from sigmoid import sigmoid, sigmoid_backward
 import function_to_estimate
 
-layers = [2, 4, 5, 1] # number of units in each layer (layers[0] - input layer)
+# layers = [2, 4, 5, 1] # number of units in each layer (layers[0] - input layer)
+layers = [2, 2, 1] # number of units in each layer (layers[0] - input layer)
 L = len(layers) - 1  # number of layers - input layer doesn't count
 W = {}
 b = {}
 number_of_iterations = 2000
-learning_rate = 0.1
+learning_rate = 0.5
 
-num_of_train_examples = 100
+num_of_train_examples = 1000
 
-np.random.seed(100) # to have the same results (testing) - remove in final solution
+np.random.seed(1) # to have the same results (testing) - remove in final solution
 X = np.floor(np.random.rand(layers[0], num_of_train_examples) * 200 - 100) # inputs
 # rows - features, in our example one example is two-dimentional vector
 # columns - training example, above we have 1000 training examples
@@ -38,10 +41,16 @@ for l in range(1, len(layers)):
 # trY = np.reshape(training_data[2,:], (-1, 1))
 
 #training
+
+leaky_relu_fun = {'forward': leaky_relu, 'backward': leaky_relu_backward}
+relu_fun = {'forward': relu, 'backward': relu_backward}
+sigmoid_fun = {'forward': sigmoid, 'backward': sigmoid_backward}
+
+activation_fun = leaky_relu_fun
+
 for i in range(0, number_of_iterations):
     #forward propagation through all the layers
-    A, Z = forward(X, L, W, b, relu)
-
+    A, Z = forward(X, L, W, b, activation_fun['forward'])
     cost = calculate_cost(A[L], Y)
 
     print(cost)
@@ -49,9 +58,19 @@ for i in range(0, number_of_iterations):
     #back propagation through all the layers
     # dA = np.multiply(np.transpose(W[L - 1]), (A - Y)) # not sure - check if correct
     dA = A[L] - Y #initialization (cost derivative)
+    W, b = backprop(L, m, learning_rate, A, dA, W, b, Z, activation_fun['backward'])
 
-    W, b = backprop(L, m, learning_rate, A, dA, W, b, Z, relu_backward)
+def predict(X):
+    A, _ = forward(X, L, W, b, relu)
+    Y = function_to_estimate.function1(X)
+    print(X)
+    print("real value: ", Y)
+    print("prediction: ", A[L])
 
-# print(W)
-# print(b)
+print("PREDICTIONS: \n\n")
+predict(np.array([[1],[20]]))
+predict(np.array([[-1],[-2]]))
+predict(np.array([[-3],[90]]))
+predict(np.array([[-10],[2]]))
+
 
