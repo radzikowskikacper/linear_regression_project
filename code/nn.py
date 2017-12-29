@@ -4,7 +4,7 @@ from random import shuffle
 from forward import forward, calculate_cost
 from backward import backprop
 from function_to_estimate import generate_data
-#from relu import relu, relu_backward
+from relu import relu, relu_backward
 from sigmoid import sigmoid, backward
 import function_to_estimate
 
@@ -34,25 +34,28 @@ data_indexes = np.random.choice([0, 1, 2], p = [0.8, 0.1, 0.1], size = (1, data.
 training_data = data[:, (data_indexes == 0)[0]]
 testing_data = data[:, (data_indexes == 1)[0]]
 validation_data = data[:, (data_indexes == 2)[0]]
-X = training_data[0:2,:]
-Y = np.reshape(training_data[2,:], (1, -1))
+trX = training_data[0:2,:]
+trY = np.reshape(training_data[2,:], (1, -1))
+tsX = testing_data[0:2,:]
+tsY = np.reshape(testing_data[2,:], (1, -1))
 
-m = np.shape(X)[1] # number of training examples
+m = np.shape(trX)[1] # number of training examples
 
 #training
 for i in range(0, number_of_iterations):
     #forward propagation through all the layers
-    A, Z = forward(X, L, W, b, sigmoid)
+    trA, trZ = forward(trX, L, W, b, sigmoid)
+    trcost = calculate_cost(trA[L], trY)
+    tsA, tsZ = forward(tsX, L, W, b, sigmoid)
+    tscost = calculate_cost(tsA[L], tsY)
 
-    cost = calculate_cost(A[L], Y)
-
-    print(cost)
+    print('Training cost: {} Testing cost: {}'.format(trcost, tscost))
 
     #back propagation through all the layers
     # dA = np.multiply(np.transpose(W[L - 1]), (A - Y)) # not sure - check if correct
-    dA = A[L] - Y #initialization (cost derivative)
+    dA = trA[L] - trY #initialization (cost derivative)
 
-    W, b = backprop(L, m, learning_rate, A, dA, W, b, Z, backward)
+    W, b = backprop(L, m, learning_rate, trA, dA, W, b, trZ, backward)
 
 # print(W)
 # print(b)
