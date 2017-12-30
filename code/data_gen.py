@@ -1,7 +1,7 @@
 import numpy as np
 import itertools as ittools
 
-from function_to_estimate import function1, function2, function3
+from function_to_estimate import function1, function2
 
 def generate_data_sets(train_data_min, train_data_max, train_data_step, test_data_min, test_data_max, test_data_step):
     np.random.seed(1)
@@ -19,6 +19,6 @@ def generate_data_sets(train_data_min, train_data_max, train_data_step, test_dat
 def generate_data_helper(x1min, x1max, x1step, x2min, x2max, x2step):
     np.random.seed(1)
     arr = np.array(list(ittools.product(np.arange(x1min, x1max, x1step), np.arange(x2min, x2max, x2step))))
-    arr = np.reshape(arr, (2, -1))
+    arr = np.reshape(arr.T, (2, -1))
     arr = np.vstack((arr, function1(arr), function2(arr)))
     return arr
