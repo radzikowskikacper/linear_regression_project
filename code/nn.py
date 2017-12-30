@@ -1,36 +1,33 @@
 import numpy as np
 
-from random import shuffle
-from forward import forward, calculate_cost
+import function_to_estimate
 from backward import backprop
+from forward import forward, calculate_cost
 from function_to_estimate import generate_data
 from leaky_relu import leaky_relu, leaky_relu_backward
 from relu import relu, relu_backward
 from sigmoid import sigmoid, sigmoid_backward
-import function_to_estimate
 
-# layers = [2, 4, 5, 1] # number of units in each layer (layers[0] - input layer)
-layers = [2, 2, 1] # number of units in each layer (layers[0] - input layer)
+layers = [2, 10, 10, 1] # number of units in each layer (layers[0] - input layer)
 L = len(layers) - 1  # number of layers - input layer doesn't count
 W = {}
 b = {}
 number_of_iterations = 200000
-learning_rate = 0.001
-'''
-num_of_train_examples = 100
-np.random.seed(1) # to have the same results (testing) - remove in final solution
-X = np.floor(np.random.rand(layers[0], num_of_train_examples) * 200 - 100) # inputs
-# rows - features, in our example one example is two-dimentional vector
-# columns - training example, above we have 1000 training examples
-Y = function_to_estimate.function1(X) # outputs
+learning_rate = 0.05
 
-'''
+train_data_min = -20
+train_data_max = 20
+train_data_step = 1
+test_data_min = -20
+test_data_max = 20
+test_data_step = 1
+
 # parameters initialization
 for l in range(1, len(layers)):
     W[l] = np.random.randn(layers[l], layers[l-1]) * 0.01 # or / np.sqrt(layers[l])
     b[l] = np.zeros((layers[l], 1))
 
-data = generate_data(0, 1000, 1, 0, 1000, 1)
+data = generate_data(train_data_min, train_data_max, train_data_step, test_data_min, test_data_max, test_data_step)
 data_indexes = np.random.choice([0, 1, 2], p = [0.8, 0.1, 0.1], size = (1, data.shape[1]))
 training_data = data[:, (data_indexes == 0)[0]]
 testing_data = data[:, (data_indexes == 1)[0]]
@@ -65,17 +62,29 @@ for i in range(1, number_of_iterations+1):
     W, b = backprop(L, m, learning_rate, trA, dA, W, b, trZ, activation_fun['backward'])
 
 def predict(X):
-    A, _ = forward(X, L, W, b, relu)
+    A, _ = forward(X, L, W, b, activation_fun['forward'])
     Y = function_to_estimate.function1(X)
     print(X)
     print("real value: ", Y)
     print("prediction: ", A[L])
 
-print("PREDICTIONS: \n\n")
-predict(np.array([[1],[20]]))
-predict(np.array([[-1],[-2]]))
-predict(np.array([[-3],[90]]))
-predict(np.array([[-10],[2]]))
+print("MODEL: \n\n")
+print("W: ", W)
+print("b: ", b)
 
+# sanity check
+print("PREDICTIONS: \n\n")
+predict(np.array([[1], [2]]))
+predict(np.array([[5], [5]]))
+predict(np.array([[2], [8]]))
+predict(np.array([[2], [2]]))
+predict(np.array([[-1], [2]]))
+predict(np.array([[-5], [-5]]))
+predict(np.array([[-3], [-9]]))
+predict(np.array([[1], [-1]]))
+predict(np.array([[1.5], [-1.8]]))
+predict(np.array([[-2.2], [2.4]]))
+predict(np.array([[-2.1], [-3.5]]))
+predict(np.array([[0.3], [0.5]]))
 
 

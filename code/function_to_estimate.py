@@ -4,9 +4,7 @@ import itertools as ittools
 #Example function to be estimated by NN:
 #  y = sin(x1) * cos(x2)
 def function1(X):
-    # return np.multiply(2 * np.sin(X[0, :]) + 5, 0.8 * np.cos(X[1, :]) - 3)
-    return np.multiply(np.sin(X[0, :]), np.cos(X[1, :]))
-    # return np.reshape(np.multiply(np.sin(X[0, :]), np.cos(X[1, :])), (1, -1))
+    return np.multiply(2 * np.sin(X[0, :]) + 5, 0.8 * np.cos(X[1, :]) - 3)
 
 #Example function to be estimated by NN:
 #  y = x1^2 + x2^2
