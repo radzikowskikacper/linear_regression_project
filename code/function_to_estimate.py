@@ -21,6 +21,6 @@ def function3(X):
 def generate_data(x1min, x1max, x1step, x2min, x2max, x2step):
     np.random.seed(1)
     arr = np.array(list(ittools.product(np.arange(x1min, x1max, x1step), np.arange(x2min, x2max, x2step))))
-    arr = np.reshape(arr, (2, -1))
+    arr = np.reshape(arr.T, (2, -1))
     arr = np.vstack((arr, function1(arr), function2(arr)))
     return arr
