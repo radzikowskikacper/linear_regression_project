@@ -12,7 +12,7 @@ def update_parameters(learning_rate, dW, db, W, b):
     b = b - learning_rate * db
     return W, b
 
-def backprop(L, m, learning_rate, A, dA, W, b, Z, backward_activation_function):
+def backprop_with_update(L, m, learning_rate, A, dA, W, b, Z, backward_activation_function):
     #Lth (last) layer:
     prevA = A[L - 1]
     dW, db, prev_dA = backprop_on_layer(Z[L], dA, prevA, W[L], m, lambda dA, Z: dA)
