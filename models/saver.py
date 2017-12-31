@@ -15,7 +15,7 @@ def save_model(layers, W, b, activation_fun):
 
     model_file = open('./../models/model_{}.py'.format(max_model_num+1), 'w')
     model_file.write("import numpy as np\n\n")
-    model_file.write("from evaluate import evaluate_model\n")
+    model_file.write("from evaluate import print_metrics\n")
     model_file.write("from sigmoid import sigmoid, sigmoid_backward\n")
     model_file.write("from leaky_relu import leaky_relu, leaky_relu_backward\n")
     model_file.write("from relu import relu, relu_backward\n\n")
@@ -31,4 +31,4 @@ def save_model(layers, W, b, activation_fun):
 
     activation_fun_name = str(activation_fun['forward']).split(' ')[1]
     model_file.write("activation_fun = {{'forward': {}, 'backward': {}_backward}}\n\n".format(activation_fun_name, activation_fun_name))
-    model_file.write("evaluate_model(layers, W, b, activation_fun)\n")
+    model_file.write("print_metrics(layers, W, b, activation_fun)\n")
