@@ -60,6 +60,5 @@ for i in range(1, number_of_iterations + 1):
     W, b = backprop_with_update(L, m, learning_rate, trA, dA, W, b, trZ, activation_fun['backward'])
 
 sanity_check(L, W, b, activation_fun, function_to_estimate.function1)
-# tsA, _ = forward(tsX, L, W, b, activation_fun['forward'])
 print_metrics(layers, W, b, activation_fun)
 save_model(layers, W, b, activation_fun)
