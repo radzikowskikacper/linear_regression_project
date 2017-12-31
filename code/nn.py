@@ -60,9 +60,9 @@ while continue_train:
         trcosts.append(trcost)
         tscosts.append(tscost)
 
-        # if i % 50 == 0:
-        print('Iteration: ', i, '   Training cost: {:.5f} Testing cost: {:.5f}'.format(trcost, tscost))
-        plot_errors(trcosts, tscosts, 'Training cost', 'Validation cost', 'Cost chart', 'costs.png')
+        if i % 50 == 0:
+            print('Iteration: ', i, '   Training cost: {:.5f} Testing cost: {:.5f}'.format(trcost, tscost))
+            plot_errors(trcosts, tscosts, 'Training cost', 'Validation cost', 'Cost chart', 'costs.png')
 
         # back propagation through all the layers
         dA = trA[L] - trY  # initialization (cost derivative)
