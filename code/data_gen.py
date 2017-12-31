@@ -3,9 +3,8 @@ import itertools as ittools
 
 from function_to_estimate import function1, function2
 
-def generate_data_sets(train_data_min, train_data_max, train_data_step, test_data_min, test_data_max, test_data_step):
+def generate_data_sets(data):
     np.random.seed(1)
-    data = generate_data_helper(train_data_min, train_data_max, train_data_step, test_data_min, test_data_max, test_data_step)
     data_indexes = np.random.choice([0, 1, 2], p=[0.8, 0.1, 0.1], size=(1, data.shape[1]))
     training_data = data[:, (data_indexes == 0)[0]]
     testing_data = data[:, (data_indexes == 1)[0]]

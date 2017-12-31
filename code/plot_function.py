@@ -4,15 +4,15 @@ from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import numpy as np
 
-def plot_function(function_to_plot):
+def plot_function(X, Y, function_to_plot):
     fig = plt.figure()
     ax = fig.gca(projection='3d')
 
     # Make data.
-    X = np.arange(-20, 20, 0.25)
-    Y = np.arange(-20, 20, 0.25)
+    #X = np.arange(-20, 20, 0.25)
+    #Y = np.arange(-20, 20, 0.25)
     X, Y = np.meshgrid(X, Y)
-    Z = function_to_plot(np.array([X.ravel(), Y.ravel()])).reshape(160,160)
+    Z = function_to_plot(np.array([X.ravel(), Y.ravel()])).reshape(X.shape)
 
     # Plot the surface.
     surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
