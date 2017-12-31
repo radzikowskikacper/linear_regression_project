@@ -15,7 +15,7 @@ plot_function(function_to_estimate.function1)
 
 layers = [2, 100, 100, 1]  # number of units in each layer (layers[0] - input layer)
 L = len(layers) - 1  # number of layers - input layer doesn't count
-number_of_iterations = 200000
+number_of_iterations = 10#0000
 learning_rate = 0.05
 
 train_data_min = -20
@@ -45,19 +45,28 @@ sigmoid_fun = {'forward': sigmoid, 'backward': sigmoid_backward}
 activation_fun = sigmoid_fun
 
 # training
-for i in range(1, number_of_iterations + 1):
-    # forward propagation through all the layers
-    trA, trZ = forward(trX, L, W, b, activation_fun['forward'])
-    trcost = calculate_cost(trA[L], trY)
-    tsA, tsZ = forward(tsX, L, W, b, activation_fun['forward'])
-    tscost = calculate_cost(tsA[L], tsY)
+continue_train = True
+iterations_start = 1
+while continue_train:
+    iterations_stop = iterations_start + number_of_iterations
+    for i in range(iterations_start, iterations_stop):
+        # forward propagation through all the layers
+        trA, trZ = forward(trX, L, W, b, activation_fun['forward'])
+        trcost = calculate_cost(trA[L], trY)
+        tsA, tsZ = forward(tsX, L, W, b, activation_fun['forward'])
+        tscost = calculate_cost(tsA[L], tsY)
 
-    if i % 50 == 0:
-        print('Iteration: ', i, '   Training cost: {:.5f} Testing cost: {:.5f}'.format(trcost, tscost))
+        if i % 50 == 0:
+            print('Iteration: ', i, '   Training cost: {:.5f} Testing cost: {:.5f}'.format(trcost, tscost))
 
-    # back propagation through all the layers
-    dA = trA[L] - trY  # initialization (cost derivative)
-    W, b = backprop_with_update(L, m, learning_rate, trA, dA, W, b, trZ, activation_fun['backward'])
+        # back propagation through all the layers
+        dA = trA[L] - trY  # initialization (cost derivative)
+        W, b = backprop_with_update(L, m, learning_rate, trA, dA, W, b, trZ, activation_fun['backward'])
+    if (input("Would you like to continue? [y/n]: ").upper() == 'Y'):
+        iterations_start = iterations_stop
+        number_of_iterations = int(input("How many addition iterations?"))
+    else:
+        continue_train = False
 
 sanity_check(L, W, b, activation_fun, function_to_estimate.function1)
 print_metrics(layers, W, b, activation_fun)
