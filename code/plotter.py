@@ -27,3 +27,13 @@ def plot_function(X, Y, function_to_plot):
     fig.colorbar(surf, shrink=0.5, aspect=5)
 
     plt.show()
+
+def plot_errors(train_errors, val_errors, train_label, val_label, title, fname):
+    train_loss_line, = plt.plot(np.arange(1, len(train_errors) + 1), train_errors, label=train_label)
+    val_loss_line, = plt.plot(np.arange(1, len(val_errors) + 1), val_errors, label=val_label)
+    plt.legend(handles=[train_loss_line, val_loss_line])
+    plt.xlabel('Epoch')
+    plt.ylabel(title)
+    plt.grid(True)
+    plt.savefig("{}".format(fname))
+    plt.close()
