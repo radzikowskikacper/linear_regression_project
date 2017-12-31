@@ -1,6 +1,6 @@
 import numpy as np
 
-from evaluate import evaluate_model
+from evaluate import print_metrics
 from sigmoid import sigmoid, sigmoid_backward
 
 layers = [2, 10, 10, 1]
@@ -59,4 +59,4 @@ b = {1: np.array([[ 21.98742748],
 
 activation_fun = {'forward': sigmoid, 'backward': sigmoid_backward}
 
-evaluate_model(layers, W, b, activation_fun)
+print_metrics(layers, W, b, activation_fun)
