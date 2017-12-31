@@ -11,9 +11,9 @@ from saver import save_model
 from sigmoid import sigmoid, sigmoid_backward
 from plotter import plot_function, plot_errors
 
-layers = [2, 10, 10, 1]  # number of units in each layer (layers[0] - input layer)
+layers = [2, 100, 100, 1]  # number of units in each layer (layers[0] - input layer)
 L = len(layers) - 1  # number of layers - input layer doesn't count
-number_of_iterations = 10#0000
+number_of_iterations = 200000
 learning_rate = 0.05
 
 train_data_min = -10
