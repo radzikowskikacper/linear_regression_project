@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.stats import pearsonr, spearmanr
 
-from data_gen import generate_data_sets
+from data_gen import generate_data_sets, generate_data_helper
 from forward import forward
 
 def print_metrics(layers, W, b, activation_fun):
@@ -13,8 +13,8 @@ def print_metrics(layers, W, b, activation_fun):
     test_data_min = -20
     test_data_max = 20
     test_data_step = 1
-    trX, trY, tsX, tsY, validation_data = generate_data_sets(train_data_min, train_data_max, train_data_step,
-                                                             test_data_min, test_data_max, test_data_step)
+    trX, trY, tsX, tsY, validation_data = generate_data_sets(generate_data_helper(train_data_min, train_data_max, train_data_step,
+                                                             test_data_min, test_data_max, test_data_step))
 
     tsA, _ = forward(tsX, L, W, b, activation_fun['forward'])
     print("Regression metrics:")
