@@ -48,6 +48,7 @@ def save_model(layers, W, b, activation_fun, tr_hist, number_of_iterations, lear
     tr_hist_file.close()
 
     for epoch_plot in save_cost_plot_after_epoch:
-        os.rename('./costs_after_{}_epoch.png'.format(epoch_plot), './../models/model_{}_costs_after_{}_epoch.png'.format(max_model_num + 1, epoch_plot))
-    os.rename('./costs.png', './../models/model_{}_costs.png'.format(max_model_num + 1))
+        if (epoch_plot <= number_of_iterations):
+            os.rename('./costs_after_{}_epoch.png'.format(epoch_plot), './../models/model_{}_costs_after_{}_epoch.png'.format(max_model_num + 1, epoch_plot))
+    # os.rename('./costs.png', './../models/model_{}_costs.png'.format(max_model_num + 1))
 
