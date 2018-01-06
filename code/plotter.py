@@ -19,12 +19,16 @@ def plot_function(X, Y, function_to_plot):
                            linewidth=0, antialiased=False)
 
     # Customize the z axis.
-    ax.set_zlim(-30, -5)
+    ax.set_zlim(-10, 10)
     ax.zaxis.set_major_locator(LinearLocator(10))
     ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
 
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
+
     # Add a color bar which maps values to colors.
-    fig.colorbar(surf, shrink=0.5, aspect=5)
+    # fig.colorbar(surf, shrink=0.5, aspect=5)
 
     plt.show()
 
