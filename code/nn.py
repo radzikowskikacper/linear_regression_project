@@ -13,7 +13,7 @@ from plotter import plot_function, plot_errors
 
 layers = [2, 100, 100, 1]  # number of units in each layer (layers[0] - input layer)
 L = len(layers) - 1  # number of layers - input layer doesn't count
-number_of_iterations = 200000
+number_of_iterations = 50000
 learning_rate = 0.05
 
 train_data_min = -20
@@ -35,8 +35,6 @@ data = generate_data_helper(train_data_min, train_data_max, train_data_step, tes
 trX, trY, tsX, tsY, validation_data = generate_data_sets(data)
 
 plot_function(data[0,:], data[1,:], function_to_estimate.function1)
-
-exit(-1)
 
 m = np.shape(trX)[1]  # number of training examples
 
