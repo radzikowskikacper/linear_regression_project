@@ -35,6 +35,7 @@ def sanity_check(L, W, b, activation_fun, function_to_estimate):
 
     # sanity check
     print("Sanity check:")
+    np.random.seed(1)
     predict(np.random.rand(2, 1) * [[20], [20]])
     predict(np.random.rand(2, 1) * [[-20], [20]])
     predict(np.random.rand(2, 1) * [[20], [-20]])

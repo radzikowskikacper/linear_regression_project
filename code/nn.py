@@ -11,10 +11,14 @@ from saver import save_model
 from sigmoid import sigmoid, sigmoid_backward
 from plotter import plot_function, plot_errors
 
-layers = [2, 100, 100, 1]  # number of units in each layer (layers[0] - input layer)
+layers = [2, 2, 1]  # number of units in each layer (layers[0] - input layer)
+# layers = [2, 2, 3, 3, 5, 5, 3, 3, 2, 2, 1]  # number of units in each layer (layers[0] - input layer)
+# layers = [2, 20, 20, 1]  # number of units in each layer (layers[0] - input layer)
+# layers = [2, 100, 100, 1]  # number of units in each layer (layers[0] - input layer)
 L = len(layers) - 1  # number of layers - input layer doesn't count
-number_of_iterations = 50000
+number_of_iterations = 10000
 learning_rate = 0.05
+save_cost_plot_after_epoch = list([50, 100, 1000])
 
 train_data_min = -20
 train_data_max = 20
@@ -34,7 +38,8 @@ for l in range(1, len(layers)):
 data = generate_data_helper(train_data_min, train_data_max, train_data_step, test_data_min, test_data_max, test_data_step)
 trX, trY, tsX, tsY, validation_data = generate_data_sets(data)
 
-plot_function(data[0,:], data[1,:], function_to_estimate.function1)
+fun_to_estimate = function_to_estimate.function1
+plot_function(data[0,:], data[1,:], fun_to_estimate)
 
 m = np.shape(trX)[1]  # number of training examples
 
@@ -45,6 +50,7 @@ sigmoid_fun = {'forward': sigmoid, 'backward': sigmoid_backward}
 activation_fun = sigmoid_fun
 
 trcosts, tscosts = list(), list()
+tr_hist = list()
 
 # training
 continue_train = True
@@ -61,8 +67,12 @@ while continue_train:
         tscosts.append(tscost)
 
         if i % 50 == 0:
-            print('Iteration: ', i, '   Training cost: {:.5f} Testing cost: {:.5f}'.format(trcost, tscost))
+            tr_hist_line = 'Iteration: {}   Training cost: {:.5f} Testing cost: {:.5f}'.format(i, trcost, tscost)
+            tr_hist.append(tr_hist_line)
+            print(tr_hist_line)
             plot_errors(trcosts, tscosts, 'Training cost', 'Validation cost', 'Cost chart', 'costs.png')
+            if i in save_cost_plot_after_epoch:
+                plot_errors(trcosts, tscosts, 'Training cost', 'Validation cost', 'Cost chart', 'costs_after_{}_epoch.png'.format(i))
 
         # back propagation through all the layers
         dA = trA[L] - trY  # initialization (cost derivative)
@@ -73,6 +83,6 @@ while continue_train:
     else:
         continue_train = False
 
-sanity_check(L, W, b, activation_fun, function_to_estimate.function1)
+sanity_check(L, W, b, activation_fun, fun_to_estimate)
 print_metrics(layers, W, b, activation_fun)
-save_model(layers, W, b, activation_fun)
+save_model(layers, W, b, activation_fun, tr_hist, number_of_iterations, learning_rate, fun_to_estimate, save_cost_plot_after_epoch)
