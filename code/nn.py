@@ -13,12 +13,12 @@ from plotter import plot_function, plot_errors
 
 # layers = [2, 2, 1]  # number of units in each layer (layers[0] - input layer)
 # layers = [2, 2, 3, 3, 5, 5, 3, 3, 2, 2, 1]  # number of units in each layer (layers[0] - input layer)
-layers = [2, 20, 20, 1]  # number of units in each layer (layers[0] - input layer)
-# layers = [2, 100, 100, 1]  # number of units in each layer (layers[0] - input layer)
+# layers = [2, 20, 20, 1]  # number of units in each layer (layers[0] - input layer)
+layers = [2, 100, 100, 1]  # number of units in each layer (layers[0] - input layer)
 L = len(layers) - 1  # number of layers - input layer doesn't count
-number_of_iterations = 10000
+number_of_iterations = 200000
 learning_rate = 0.05
-save_cost_plot_after_epoch = list([50, 100, 1000, 5000])
+save_cost_plot_after_epoch = list([50, 100, 1000, 5000, 10000, 50000, 100000])
 
 train_data_min = -20
 train_data_max = 20
