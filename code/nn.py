@@ -47,7 +47,7 @@ m = np.shape(trX)[1]  # number of training examples
 leaky_relu_fun = {'forward': leaky_relu, 'backward': leaky_relu_backward}
 relu_fun = {'forward': relu, 'backward': relu_backward}
 sigmoid_fun = {'forward': sigmoid, 'backward': sigmoid_backward}
-activation_fun = sigmoid_fun
+activation_fun = relu_fun
 
 trcosts, tscosts = list(), list()
 tr_hist = list()
@@ -67,7 +67,7 @@ while continue_train:
         trcosts.append(trcost)
         tscosts.append(tscost)
 
-        if i % 50 == 0:
+        if i % 5 == 0:
             tr_hist_line = 'Iteration: {}   Training cost: {:.5f} Testing cost: {:.5f}'.format(i, trcost, tscost)
             tr_hist.append(tr_hist_line)
             print(tr_hist_line)
